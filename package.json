@@ -1,0 +1,38 @@
+{
+  "name": "restapi-typescript-postgresql",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "lint": "ts-standard",
+    "start": "node build/index.js",
+    "dev": "ts-node-dev --env-file .env src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "4.21.2",
+    "express-validator": "^7.2.1",
+    "pg": "8.13.1",
+    "restapi-typescript-postgresql": "file:"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.0",
+    "@types/morgan": "^1.9.9",
+    "@types/pg": "^8.11.11",
+    "morgan": "^1.10.0",
+    "ts-node-dev": "2.0.0",
+    "ts-standard": "12.0.2",
+    "typescript": "5.7.3"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "extends": [
+      "./node_modules/ts-standard/eslintrc.json"
+    ]
+  }
+}
