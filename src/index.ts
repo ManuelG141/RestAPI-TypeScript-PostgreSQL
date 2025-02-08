@@ -1,17 +1,17 @@
 import express from 'express'
 // import dotenv from 'dotenv' // It's not neccesary, now node can read .env files by default with the option "--env-file name_of_file" exp: "ts-node-dev --env-file .env src/index.ts"
 import router from './routes/users.routes'
-import path from 'path'
+// import path from 'path' // To create a static server
 import morgan from 'morgan'
 
 // dotenv.config()
 
 const app = express()
 
-app.use(morgan(':remote-addr [:date[clf]] :method :url :status - :response-time ms'))
+app.use(morgan(':remote-addr [:date[clf]] :method :url :status - :response-time ms')) // To see HTTP requests in the console
 app.use(express.json())
 
-app.get('/', express.static(path.join(__dirname, '../public'))) // Relative to this project
+// app.get('/', express.static(path.join(__dirname, '../public'))) // Relative to this project, to create a static server
 
 app.use('/api/users', router)
 

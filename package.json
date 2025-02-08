@@ -13,19 +13,18 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/express": "5.0.0",
+    "@types/morgan": "1.9.9",
+    "@types/pg": "8.11.11",
     "express": "4.21.2",
-    "express-validator": "^7.2.1",
+    "morgan": "1.10.0",
     "pg": "8.13.1",
-    "restapi-typescript-postgresql": "file:"
+    "restapi-typescript-postgresql": "file:",
+    "ts-node-dev": "2.0.0",
+    "typescript": "5.7.3"
   },
   "devDependencies": {
-    "@types/express": "5.0.0",
-    "@types/morgan": "^1.9.9",
-    "@types/pg": "^8.11.11",
-    "morgan": "^1.10.0",
-    "ts-node-dev": "2.0.0",
-    "ts-standard": "12.0.2",
-    "typescript": "5.7.3"
+    "ts-standard": "12.0.2"
   },
   "eslintConfig": {
     "parserOptions": {

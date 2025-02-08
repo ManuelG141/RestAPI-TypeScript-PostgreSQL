@@ -3,8 +3,6 @@ import { User } from '../types'
 import { pool } from './db'
 import { Request, Response } from 'express'
 
-// TODO, PASS THE COMPLETE FUNCTIONS HERE
-
 export const getAllUsers = async (_req: Request<any>, res: Response<any>): Promise<void> => { // WORKING
   try {
     const client = await pool.connect()
@@ -46,13 +44,11 @@ export const getUserById = async (req: Request<any>, res: Response<any>): Promis
   }
 }
 
-// UNCOMPLETE, VALIDATE USER IS MISSING
-export const updateUser = async (req: Request<any>, res: Response<any>): Promise<void> => {
+export const updateUser = async (req: Request<any>, res: Response<any>): Promise<void> => { // WORKING
   if (!utils.isValidId(req.params.id)) {
     res.status(400).send('Invalid id, provide a numeric id')
   } else {
-    // VALIDATE THE BODY STUFF ...
-    const validUser = true
+    const validUser = utils.isValidUser(req.body)
 
     if (!validUser) { // If the user is not valid
       res.status(400).send('Invalid user')
@@ -86,10 +82,8 @@ export const updateUser = async (req: Request<any>, res: Response<any>): Promise
   }
 }
 
-// UNCOMPLETE, VALIDATE USER IS MISSING
-export const createUser = async (req: Request<any>, res: Response<any>): Promise<void> => {
-  // VALIDATE THE BODY STUFF ...
-  const validUser = true
+export const createUser = async (req: Request<any>, res: Response<any>): Promise<void> => { // WORKING
+  const validUser = utils.isValidUser(req.body)
 
   if (!validUser) { // If the user is not valid
     res.status(400).send('Invalid user')
@@ -118,21 +112,29 @@ export const createUser = async (req: Request<any>, res: Response<any>): Promise
   }
 }
 
-export const deleteUser = async (id: number): Promise<User | undefined> => {
-  const client = await pool.connect()
-  const result = await client.query('DELETE FROM users WHERE id = $1 RETURNING *;', [id])
-  client.release()
+export const deleteUser = async (req: Request<any>, res: Response<any>): Promise<void> => { // WORKING
+  if (!utils.isValidId(req.params.id)) {
+    res.status(400).send('Invalid id, provide a numeric id')
+  } else {
+    try {
+      const client = await pool.connect()
+      const result = await client.query('DELETE FROM users WHERE id = $1 RETURNING *;', [req.params.id])
+      client.release()
 
-  if (result.rowCount === 0) {
-    return undefined
+      if (result.rowCount === 0) {
+        res.status(404).send('Resource not found')
+      } else {
+        const entry: User = {
+          id: result.rows[0].id,
+          name: result.rows[0].name,
+          email: result.rows[0].email,
+          created_at: result.rows[0].created_at
+        }
+        res.send(entry)
+      }
+    } catch (error) {
+      console.log(error)
+      res.status(500).send('Internal server error')
+    }
   }
-
-  const entry: User = {
-    id: result.rows[0].id,
-    name: result.rows[0].name,
-    email: result.rows[0].email,
-    created_at: result.rows[0].created_at
-  }
-
-  return entry
 }
