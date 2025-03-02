@@ -21,20 +21,12 @@
 
 ### Configuration
 
-Create a `.env` file in the root directory and add the following environment variables:
-    ```
+1. Create a `.env` file in the root directory and add the following environment variables:
+    ```bash
     DB_ENDPOINT=your_database_host
-    ```
-    ```
     DB_PORT=your_database_port,
-    ```
-    ```
     DB_USER=your_database_user,
-    ```
-    ```
     DB_PASSWORD=your_database_password,
-    ```
-    ```
     DB=your_database_name
     ```
 
